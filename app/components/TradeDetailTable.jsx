@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const styles = {
   divThStyle:
-    'items-center font-bold px-3 py-4 border-b border-l border-gray-700 text-left bg-indigo-700 text-white',
+    'text-center items-center font-bold px-1 py-4 border-b border-l border-gray-700 text-left bg-indigo-700 text-white',
 }
 
 export default class TradeDetailTable extends Component {
@@ -46,7 +46,7 @@ export default class TradeDetailTable extends Component {
       <table className="rounded">
         <thead>
           <tr>
-            <th className={styles.divThStyle}>Number </th>
+            <th className={styles.divThStyle}>No. </th>
             <th className={styles.divThStyle}>Date </th>
             <th className={styles.divThStyle}>Time</th>
             <th className={styles.divThStyle}>Call Type</th>
