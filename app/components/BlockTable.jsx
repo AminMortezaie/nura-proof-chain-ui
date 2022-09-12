@@ -17,9 +17,10 @@ const styles = {
 export default class BlockTable extends Component {
   // var trades = this.props.tableData
 
+  
   render() {
     var tableData = this.props.tableData.map((tData, i) => (
-      <TableData key={i} tableData={tData} />
+      <TableData key={i} tableData={tData} blockNo={i}  />
     ))
     console.log(this.props.tableData)
     return (

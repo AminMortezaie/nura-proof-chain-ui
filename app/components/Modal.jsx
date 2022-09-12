@@ -35,7 +35,8 @@ export default function Modal(props) {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <TradeDetailTable />
+                  {console.log(props.blockNumber)}
+                  <TradeDetailTable blockNumber={props.blockNumber}/>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

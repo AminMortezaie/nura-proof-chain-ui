@@ -10,21 +10,19 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      employees: [],
-      trades: [],
-      tableData: [
-        {
-          blockNo: '2',
-          blockHash: '0xdfa99921111342',
-          trades: [{ tradeNumber: '2', dailyNumber: '1' }],
-          timestamp: '14:00 day',
-        },
-        {
-          blockNo: '1',
-          blockHash: '0xaaa99921111112',
-          trades: [{ tradeNumber: '1', dailyNumber: '1' }],
-          timestamp: '11:00 day',
-        },
+      tableData: [{
+        blockHash: "AA0PvdvKYFuvWVR7j9g23KY55TVrQ7xW+0l3kfwTnds=",
+        timestamp: "2022-09-11T17:16:23+04:30",
+        trades:
+          [{ tradeNumber: "787854" }],
+        blockNo: 29
+      },
+      {
+        blockNo: '1',
+        blockHash: '0xaaa99921111112',
+        trades: [{ tradeNumber: '1', dailyNumber: '1' }],
+        timestamp: '11:00 day',
+      },
       ],
     }
     this.addTrade = this.addTrade.bind(this)
@@ -35,16 +33,20 @@ export default class App extends Component {
   }
   componentDidMount() {
     let _this = this
-    this.Axios.get('/trades')
-      .then(function (response) {
-        _this.setState({ trades: response.data })
-      })
-      .catch(function (error) {})
+    // this.Axios.get('/trades')
+    //   .then(function (response) {
+    //     _this.setState({ trades: response.data })
+    //   })
+    //   .catch(function (error) {})
     this.Axios.get('/blocks')
       .then(function (response) {
-        _this.setState({ tableData: response.data })
+        const res = (response.data)
+        console.log("APPPP resssss", res)
+        const tradeso = res[7].trades
+        console.log("APPPPPPP", tradeso)
+        _this.setState({ tableData: res })
       })
-      .catch(function (error) {})
+      .catch(function (error) { })
   }
   addTrade(
     tradeNumber,
@@ -65,7 +67,7 @@ export default class App extends Component {
     tradeStatus,
   ) {
     let _this = this
-    this.Axios.post('/trade/add', {
+    this.Axios.post('/trades/add', {
       tradeNumber,
       dailyNumber,
       date,
@@ -86,7 +88,7 @@ export default class App extends Component {
       .then(function (response) {
         _this.setState({ trades: response.data })
       })
-      .catch(function (error) {})
+      .catch(function (error) { })
   }
   render() {
     console.log(this.state.tableData)

@@ -10,42 +10,48 @@ const styles = {
 export default class TradeDetailTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { trades: [] }
+    this.state = { trades: [], render: false }
     this.Axios = axios.create({
       headers: { 'content-type': 'application/json' },
     })
   }
   componentDidMount() {
+    const b = this.props.blockNumber
     let _this = this
-    this.Axios.get('/trades')
+    this.Axios.get('/blocks')
       .then(function (response) {
-        _this.setState({ trades: response.data })
+        _this.setState({ trades: (response.data)[b].trades })
       })
-      .catch(function (error) {})
+      .catch(function (error) { })
   }
 
   render() {
-    let TradeData = this.state.trades.map((tData, i) => {
-      return (
-        <TradeDetailData
-          key={i}
-          tradeNumber={tData.tradeNumber}
-          date={tData.date}
-          time={tData.time}
-          callType={tData.callType}
-          pair={tData.pair}
-          entry={tData.firstEntry}
-          target={tData.target}
-          stop={tData.stoploss}
-          candle={tData.baseCandle}
-          status={tData.tradeStatus}
-        />
-      )
-    })
+    let TradeData = null;
+    if (this.state.trades) {
+      TradeData = this.state.trades.map((tData, i) => {
+        return (
+          <TradeDetailData
+            key={i}
+            tradeNumber={tData.tradeNumber}
+            date={tData.date}
+            time={tData.time}
+            callType={tData.callType}
+            pair={tData.pair}
+            entry={tData.firstEntry}
+            target={tData.target}
+            stop={tData.stoploss}
+            candle={tData.baseCandle}
+            status={tData.tradeStatus}
+          />
+        )
+      })
+    }
     return (
+
       <table className="rounded">
+
         <thead>
-          <tr>
+          {TradeData ? <tr>
             <th className={styles.divThStyle}>No. </th>
             <th className={styles.divThStyle}>Date </th>
             <th className={styles.divThStyle}>Time</th>
@@ -56,7 +62,9 @@ export default class TradeDetailTable extends Component {
             <th className={styles.divThStyle}>Stop</th>
             <th className={styles.divThStyle}>Candle</th>
             <th className={styles.divThStyle}>Status</th>
-          </tr>
+          </tr> : <h1>
+            There is no trade data in this Block.
+            </h1>}
         </thead>
         <tbody>{TradeData}</tbody>
       </table>
